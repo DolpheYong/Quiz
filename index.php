@@ -25,35 +25,77 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Quiz Local</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-    <h1>Quiz Local</h1>
+  <header class="header">
 
-    <h2>Bienvenue che GENIE LOGIC</h2>
+    <div class="logo">
+        GÉNIE <span>LOGIC</span>
+    </div>
 
-    <?php if (isset($erreur)): ?>
-        <p style="color: red;">
-            <?= htmlspecialchars($erreur) ?>
-        </p>
-    <?php endif; ?>
+    <div class="header-title">
+        Quiz des apprenants
+    </div>
 
-    <form method="POST">
+</header>
 
-        <label for="nom">Votre nom :</label>
+<main class="container">
 
-        <input
-            type="text"
-            id="nom"
-            name="nom"
-            required
-        >
+    <div class="card">
 
-        <button type="submit">
-            Commencer
-        </button>
+        <div class="hero">
 
-    </form>
+            <h1>Choisissez votre matière</h1>
 
+            <p>
+                Bonjour
+                <strong><?= htmlspecialchars($_SESSION['nom']) ?></strong>
+            </p>
+
+        </div>
+
+        <form method="POST" action="quiz.php">
+
+            <label class="matiere">
+                <input
+                    type="radio"
+                    name="matiere"
+                    value="Anglais"
+                    required
+                >
+                🇬🇧 Anglais
+            </label>
+
+            <label class="matiere">
+                <input
+                    type="radio"
+                    name="matiere"
+                    value="Français"
+                >
+                🇫🇷 Français
+            </label>
+
+            <label class="matiere">
+                <input
+                    type="radio"
+                    name="matiere"
+                    value="Informatique"
+                >
+                💻 Informatique générale
+            </label>
+
+            <br>
+
+            <button class="btn" type="submit">
+                Commencer le quiz
+            </button>
+
+        </form>
+
+    </div>
+
+</main>
 </body>
 </html>
