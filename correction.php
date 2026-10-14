@@ -105,7 +105,7 @@ $correction = $_SESSION['correction'];
 </head>
 
 <body>
-
+<script src="/quiz-local/assets/js/menu.js" defer></script>
     <div class="header">
 
         <h1>Correction du quiz</h1>

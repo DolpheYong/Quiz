@@ -1,0 +1,27 @@
+
+.menu-principal {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    background: #16324f;
+    font-family: Arial, sans-serif;
+}
+
+.menu-principal a {
+    color: white;
+    text-decoration: none;
+    padding: 9px 12px;
+    border-radius: 5px;
+}
+
+.menu-principal a:hover {
+    background: #285b85;
+}
+
+.menu-principal .logo {
+    font-size: 19px;
+    font-weight: bold;
+    margin-right: auto;
+}

@@ -1,58 +1,90 @@
-<?php
-
-session_start();
-
-if (!isset($_SESSION['nom'])) {
-    header('Location: index.php');
-    exit;
-}
-
-?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Choisir une matière</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choisir une matière | Génie Logic</title>
+
+    <link rel="stylesheet" href="/quiz-local/assets/css/menu.css">
+    <link rel="stylesheet" href="/quiz-local/assets/css/matiere.css">
+
+    <script src="/quiz-local/assets/js/menu.js" defer></script>
 </head>
+
 <body>
+    <main class="matiere-container">
 
-    <h1>Quiz Local</h1>
+        <header class="matiere-header">
+            <h1>Quiz Génie Logic</h1>
 
-    <p>
-        Bonjour <?= htmlspecialchars($_SESSION['nom']) ?> !
-    </p>
+            <p>
+                Bonjour
+                <strong><?= htmlspecialchars($_SESSION['nom'], ENT_QUOTES, 'UTF-8') ?></strong> !
+            </p>
 
-    <h2>Choisissez une matière</h2>
+            <p>Testez vos connaissances et progressez à votre rythme.</p>
+        </header>
 
-    <form method="POST" action="quiz.php">
+        <section class="matiere-card">
+            <h2>Choisissez une matière</h2>
 
-        <label>
-            <input type="radio" name="matiere" value="Anglais" required>
-            Anglais
-        </label>
+            <p class="description">
+                Sélectionnez une matière pour commencer le quiz de 30 questions.
+            </p>
 
-        <br>
+            <form method="POST" action="quiz.php">
 
-        <label>
-            <input type="radio" name="matiere" value="Français">
-            Français
-        </label>
+                <label class="matiere-option">
+                    <input
+                        type="radio"
+                        name="matiere"
+                        value="Anglais"
+                        required
+                    >
+                    <span>
+                        <span class="matiere-nom">Anglais</span>
+                        <span class="matiere-detail">
+                            Vocabulaire, grammaire et compréhension.
+                        </span>
+                    </span>
+                </label>
 
-        <br>
+                <label class="matiere-option">
+                    <input
+                        type="radio"
+                        name="matiere"
+                        value="Français"
+                    >
+                    <span>
+                        <span class="matiere-nom">Français</span>
+                        <span class="matiere-detail">
+                            Orthographe, grammaire et expression.
+                        </span>
+                    </span>
+                </label>
 
-        <label>
-            <input type="radio" name="matiere" value="Informatique">
-            Informatique générale
-        </label>
+                <label class="matiere-option">
+                    <input
+                        type="radio"
+                        name="matiere"
+                        value="Informatique"
+                    >
+                    <span>
+                        <span class="matiere-nom">Informatique générale</span>
+                        <span class="matiere-detail">
+                            Culture numérique et notions informatiques.
+                        </span>
+                    </span>
+                </label>
 
-        <br><br>
+                <button class="btn-commencer" type="submit">
+                    Commencer le quiz →
+                </button>
 
-        <button type="submit">
-            Commencer le quiz
-        </button>
+            </form>
+        </section>
 
-    </form>
-
+    </main>
 </body>
 </html>

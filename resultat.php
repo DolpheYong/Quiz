@@ -76,6 +76,8 @@ $_SESSION['correction'] = $correction;
     <meta charset="UTF-8">
 
     <title>Résultat du quiz</title>
+        <link rel="stylesheet" href="/quiz-local/assets/css/menu.css">
+
 
     <style>
 

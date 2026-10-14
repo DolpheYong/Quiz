@@ -1,163 +1,56 @@
-```php
-<?php
-
-session_start();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    $nom = trim($_POST['nom'] ?? '');
-
-    if ($nom === '') {
-
-        $erreur = "Veuillez saisir votre nom.";
-
-    } else {
-
-        $_SESSION['nom'] = $nom;
-
-        // Nettoyer les anciennes données du quiz
-        unset(
-            $_SESSION['matiere'],
-            $_SESSION['questions'],
-            $_SESSION['score'],
-            $_SESSION['total'],
-            $_SESSION['pourcentage'],
-            $_SESSION['correction']
-        );
-
-        header('Location: matiere.php');
-        exit;
-    }
-}
-
-?>
 
 <!DOCTYPE html>
-
 <html lang="fr">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Quiz | Génie Logic</title>
-
-    <link
-        rel="stylesheet"
-        href="assets/css/style.css"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Génie Logic - Espace numérique</title>
+    <link rel="stylesheet" href="/quiz-local/assets/css/menu.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #16324f;
+        }
+        main {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .carte {
+            display: block;
+            margin: 15px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            color: #16324f;
+            text-decoration: none;
+        }
+        .carte:hover {
+            background: #f0f5fa;
+        }
+    </style>
+    <script src="/quiz-local/assets/js/menu.js" defer></script>
 </head>
-
 <body>
+    <main>
+        <h1>Bienvenue sur Génie Logic</h1>
+        <p>Votre espace local d'apprentissage numérique.</p>
 
-    <!-- HEADER -->
+        <a class="carte" href="/quiz-local/quiz.php">
+            <h2>Quiz informatique</h2>
+            <p>Tester ses connaissances.</p>
+        </a>
 
-    <header class="header">
+        <a class="carte" href="/quiz-local/lecons/developpement/introduction-html.html">
+            <h2>Développement web</h2>
+            <p>Découvrir HTML et les bases du Web.</p>
+        </a>
 
-        <div class="header-content">
-
-            <div class="logo">
-                GÉNIE <span>LOGIC</span>
-            </div>
-
-            <div class="header-title">
-                Centre de formation
-            </div>
-
-        </div>
-
-    </header>
-
-
-    <!-- CONTENU -->
-
-    <main class="main">
-
-        <section class="welcome-card">
-
-            <div class="welcome-icon">
-                ?
-            </div>
-
-            <h1>
-                Quiz Génie Logic
-            </h1>
-
-            <h2>
-                Testez vos connaissances
-            </h2>
-
-            <p class="description">
-                Bienvenue sur la plateforme de quiz de
-                Génie Logic.
-                Choisissez votre matière et évaluez
-                vos connaissances à travers une série
-                de questions.
-            </p>
-
-
-            <?php if (isset($erreur)): ?>
-
-                <div class="error">
-
-                    <?= htmlspecialchars($erreur) ?>
-
-                </div>
-
-            <?php endif; ?>
-
-
-            <form method="POST">
-
-                <div class="form-group">
-
-                    <label for="nom">
-                        Nom de l'apprenant
-                    </label>
-
-                    <input
-                        type="text"
-                        id="nom"
-                        name="nom"
-                        placeholder="Entrez votre nom"
-                        autocomplete="name"
-                        required
-                        autofocus
-                    >
-
-                </div>
-
-
-                <button
-                    type="submit"
-                    class="btn-primary"
-                >
-                    Commencer le quiz
-                </button>
-
-            </form>
-
-        </section>
-
+        <a class="carte" href="/quiz-local/lecons/developpement/historique.html">
+            <h2>Historique du Web</h2>
+            <p>Découvrir l'évolution d'Internet et du Web.</p>
+        </a>
     </main>
-
-
-    <!-- FOOTER -->
-
-    <footer class="footer">
-
-        © <?= date('Y') ?> Génie Logic
-        — Plateforme de quiz
-
-    </footer>
-
 </body>
-
 </html>
-```

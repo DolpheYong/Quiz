@@ -61,45 +61,13 @@ $_SESSION['questions'] = $questions;
 
 <head>
     <meta charset="UTF-8">
-
+     <link rel="stylesheet" href="/quiz-local/assets/css/menu.css">
     <title>Quiz <?= htmlspecialchars($matiere) ?></title>
+    <link rel="stylesheet" href="/quiz-local/assets/css/quiz.css">
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-
-        .question {
-            border: 1px solid #ddd;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-        }
-
-        .question h3 {
-            margin-top: 0;
-        }
-
-        .option {
-            display: block;
-            padding: 8px;
-            margin: 5px 0;
-        }
-
-        .option:hover {
-            background-color: #f2f2f2;
-        }
-
-        .btn {
-            padding: 12px 25px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-    </style>
-
+  <script src="/quiz-local/assets/js/menu.js" defer></script>
+    
+<script src="/quiz-local/assets/js/menu.js" defer></script>
 </head>
 
 <body>
