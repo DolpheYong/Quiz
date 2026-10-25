@@ -42,7 +42,7 @@
             <p>Tester ses connaissances.</p>
         </a>
 
-        <a class="carte" href="/quiz-local/lecons/developpement/introduction-html.html">
+        <a class="carte" href="/quiz-local/lecons/developpement/historique.html">
             <h2>Développement web</h2>
             <p>Découvrir HTML et les bases du Web.</p>
         </a>
