@@ -51,6 +51,12 @@
             <h2>Historique du Web</h2>
             <p>Découvrir l'évolution d'Internet et du Web.</p>
         </a>
+                <a class="carte" href="/quiz-local/cour.html">
+            <h2>Fondamentaux de l'Ordinateur et de Windows</h2>
+            <p> Comprendre le base d'utilisation de l'ordinateur</p>
+        </a>
+
+
     </main>
 </body>
 </html>

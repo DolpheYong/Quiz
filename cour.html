@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Fondamentaux de l'Ordinateur et de Windows</title>
+    <link rel="stylesheet" href="/quiz-local/assets/css/menu.css">
+    <style>
+        /* ===== RESET & VARIABLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light: #f1f5f9;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+
+        /* ===== BARRE DE PROGRESSION ===== */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.1s ease;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 250px;
+            height: 250px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+
+        header h1 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .meta-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* ===== SOMMAIRE (Table des matières) ===== */
+        .toc {
+            background: var(--white);
+            max-width: 900px;
+            margin: -2rem auto 2rem;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            z-index: 10;
+        }
+
+        .toc h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .toc-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: var(--light);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--dark);
+            transition: all 0.2s;
+            border-left: 4px solid var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .toc-item:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateX(5px);
+        }
+
+        .toc-item .num {
+            font-weight: bold;
+            margin-right: 0.6rem;
+            color: var(--primary);
+        }
+
+        .toc-item:hover .num {
+            color: var(--white);
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem;
+        }
+
+        /* ===== SECTIONS ===== */
+        section {
+            background: var(--white);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 20px;
+        }
+
+        section h2 {
+            color: var(--primary-dark);
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        section h3 {
+            color: var(--dark);
+            font-size: 1.25rem;
+            margin: 1.5rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        section h3::before {
+            content: '';
+            width: 6px;
+            height: 22px;
+            background: var(--primary);
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        section p {
+            margin-bottom: 1rem;
+            color: #475569;
+        }
+
+        section ul, section ol {
+            margin: 1rem 0 1rem 1.5rem;
+            color: #475569;
+        }
+
+        section li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== ENCADRÉS PÉDAGOGIQUES ===== */
+        .box {
+            padding: 1.2rem 1.5rem;
+            border-radius: 12px;
+            margin: 1.2rem 0;
+            border-left: 5px solid;
+            position: relative;
+        }
+
+        .box-analogy {
+            background: #fef3c7;
+            border-color: var(--secondary);
+        }
+
+        .box-tip {
+            background: #d1fae5;
+            border-color: var(--success);
+        }
+
+        .box-warning {
+            background: #fee2e2;
+            border-color: var(--danger);
+        }
+
+        .box-info {
+            background: #dbeafe;
+            border-color: var(--primary);
+        }
+
+        .box-title {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .box-analogy .box-title { color: #92400e; }
+        .box-tip .box-title { color: #065f46; }
+        .box-warning .box-title { color: #991b1b; }
+        .box-info .box-title { color: #1e40af; }
+
+        /* ===== TABLEAUX ===== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        th {
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.9rem;
+            text-align: left;
+        }
+
+        td {
+            padding: 0.9rem;
+            border-bottom: 1px solid #e2e8f0;
+            color: #475569;
+        }
+
+        tr:nth-child(even) td {
+            background: #f8fafc;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* ===== BADGES / TOUCHES CLAVIER ===== */
+        kbd {
+            background: var(--dark);
+            color: var(--white);
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            font-weight: bold;
+            box-shadow: 0 2px 0 #0f172a;
+            display: inline-block;
+            margin: 0 2px;
+        }
+
+        /* ===== EXERCICE PRATIQUE ===== */
+        .exercise {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-top: 2rem;
+        }
+
+        .exercise h3 {
+            color: var(--secondary);
+            margin-top: 0;
+        }
+
+        .exercise h3::before {
+            background: var(--secondary);
+        }
+
+        .exercise ol {
+            color: #e2e8f0;
+        }
+
+        .exercise li {
+            margin-bottom: 0.75rem;
+            padding-left: 0.5rem;
+        }
+
+        .exercise strong {
+            color: var(--secondary);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+            background: var(--white);
+            border-top: 1px solid #e2e8f0;
+        }
+
+        footer strong {
+            color: var(--primary);
+        }
+
+        /* ===== BOUTON RETOUR EN HAUT ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 640px) {
+            header {
+                padding: 2rem 1rem;
+            }
+
+            .toc {
+                margin: -1rem 1rem 1rem;
+                padding: 1.5rem;
+            }
+
+            section {
+                padding: 1.5rem;
+            }
+
+            section h2 {
+                font-size: 1.3rem;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 0.6rem;
+            }
+
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        /* ===== ANIMATION ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        section {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* ===== IMPRESSION ===== */
+        @media print {
+            .progress-bar,
+            .back-to-top,
+            .toc {
+                display: none;
+            }
+
+            body {
+                background: white;
+            }
+
+            section {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+    <script src="/quiz-local/assets/js/menu.js" defer></script>
+</head>
+<body>
+
+    <!-- Barre de progression -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- En-tête -->
+    <header>
+        <h1>🖥️ Fondamentaux de l'Ordinateur et de Windows</h1>
+        <p class="subtitle">Cours particuliers de bureautique — Vendredi</p>
+        <div class="meta-info">
+            <span class="meta-badge">⏱️ Durée : 1h30 - 2h</span>
+            <span class="meta-badge">🎯 Niveau : Débutant</span>
+            <span class="meta-badge">📚 5 Parties</span>
+        </div>
+    </header>
+
+    <!-- Sommaire -->
+    <nav class="toc">
+        <h2>📋 Sommaire du cours</h2>
+        <div class="toc-grid">
+            <a href="#partie1" class="toc-item"><span class="num">1.</span> Comprendre la machine</a>
+            <a href="#partie2" class="toc-item"><span class="num">2.</span> Bureau et navigation</a>
+            <a href="#partie3" class="toc-item"><span class="num">3.</span> Organisation des fichiers</a>
+            <a href="#partie4" class="toc-item"><span class="num">4.</span> Bonnes pratiques</a>
+            <a href="#partie5" class="toc-item"><span class="num">5.</span> Atelier pratique</a>
+            <a href="#conseils" class="toc-item"><span class="num">★</span> Conseils du formateur</a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <!-- ===== PARTIE 1 ===== -->
+        <section id="partie1">
+            <h2>1️⃣ Comprendre la Machine</h2>
+
+            <h3>Matériel (Hardware) vs Logiciel (Software)</h3>
+
+            <div class="box box-analogy">
+                <span class="box-title">🍳 Analogie de la cuisine</span>
+                Le <strong>Matériel</strong>, c'est la cuisine (les casseroles, le four, le plan de travail). Le <strong>Logiciel</strong>, c'est la recette de cuisine (les instructions pour préparer un plat).
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matériel (Hardware)</th>
+                        <th>Logiciel (Software)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Écran, clavier, souris</td>
+                        <td>Windows (système d'exploitation)</td>
+                    </tr>
+                    <tr>
+                        <td>Unité centrale, imprimante</td>
+                        <td>Word, Excel, Chrome (applications)</td>
+                    </tr>
+                    <tr>
+                        <td>Ce que l'on peut toucher</td>
+                        <td>Ce qui est invisible (code)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="box box-info">
+                <span class="box-title">💡 Message clé</span>
+                On ne peut pas cuisiner sans cuisine, mais une cuisine sans recette ne sert à rien. L'ordinateur a besoin <strong>des deux</strong> pour fonctionner.
+            </div>
+
+            <h3>Le Système d'Exploitation (Windows)</h3>
+            <p>C'est le <strong>chef d'orchestre</strong> de l'ordinateur. Il permet au matériel (clavier) de communiquer avec le logiciel (Word).</p>
+
+            <div class="box box-tip">
+                <span class="box-title">✅ Vérification rapide</span>
+                Pour voir la version de Windows : <strong>Paramètres → Système → À propos</strong>
+            </div>
+        </section>
+
+        <!-- ===== PARTIE 2 ===== -->
+        <section id="partie2">
+            <h2>2️⃣ Le Bureau et la Navigation</h2>
+
+            <h3>Le Bureau et la Barre des tâches</h3>
+            <p><strong>Le Bureau :</strong> c'est le plan de travail. On y place ce qu'on utilise souvent.</p>
+            <p><strong>La Barre des tâches :</strong> c'est le tableau de bord de la voiture.</p>
+
+            <ul>
+                <li>Icône <strong>Windows</strong> (Démarrer)</li>
+                <li>Zone de recherche</li>
+                <li>Applications épinglées</li>
+                <li>Zone de notification (heure, wifi, son) — <em>souvent source de confusion pour les débutants</em></li>
+            </ul>
+
+            <div class="box box-tip">
+                <span class="box-title">🎯 Astuce formateur</span>
+                Demandez aux apprenants de changer l'heure ou le volume. Ils manipuleront ainsi la zone de notification en toute sécurité.
+            </div>
+
+            <h3>Le Menu Démarrer</h3>
+            <div class="box box-analogy">
+                <span class="box-title">📖 Analogie</span>
+                C'est le <strong>sommaire d'un livre</strong> : toutes les applications y sont listées par ordre alphabétique.
+            </div>
+
+            <div class="box box-info">
+                <span class="box-title">🖱️ Action guidée</span>
+                Clic droit sur une application → <strong>Épingler à la barre des tâches</strong> pour un accès rapide.
+            </div>
+
+            <h3>Gérer les Fenêtres</h3>
+            <p>Les <strong>3 boutons magiques</strong> en haut à droite de chaque fenêtre :</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Bouton</th>
+                        <th>Nom</th>
+                        <th>Fonction</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>−</strong></td>
+                        <td>Réduire</td>
+                        <td>La fenêtre disparaît mais tourne en arrière-plan</td>
+                    </tr>
+                    <tr>
+                        <td><strong>□</strong></td>
+                        <td>Agrandir / Restaurer</td>
+                        <td>Plein écran ou taille moyenne</td>
+                    </tr>
+                    <tr>
+                        <td><strong>×</strong></td>
+                        <td>Fermer</td>
+                        <td>Ferme la fenêtre (⚠️ vérifier la sauvegarde !)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="box box-tip">
+                <span class="box-title">⌨️ Raccourci puissant</span>
+                <kbd>Windows</kbd> + <kbd>←</kbd> / <kbd>→</kbd> pour mettre deux fenêtres côte à côte. Idéal pour comparer deux documents.
+            </div>
+        </section>
+
+        <!-- ===== PARTIE 3 ===== -->
+        <section id="partie3">
+            <h2>3️⃣ L'Organisation des Fichiers</h2>
+
+            <h3>Dossier vs Fichier</h3>
+
+            <div class="box box-analogy">
+                <span class="box-title">🗄️ Analogie</span>
+                Le <strong>Dossier</strong>, c'est l'armoire. Le <strong>Fichier</strong>, c'est le document à l'intérieur.
+            </div>
+
+            <div class="box box-warning">
+                <span class="box-title">⚠️ Règle d'or</span>
+                Un fichier a toujours un <strong>nom</strong> et une <strong>extension</strong> : <code>.docx</code>, <code>.xlsx</code>, <code>.pdf</code>, <code>.jpg</code>.
+            </div>
+
+            <div class="box box-tip">
+                <span class="box-title">👁️ Afficher les extensions</span>
+                Onglet <strong>Affichage</strong> → cocher <strong>Extensions de noms de fichiers</strong>. C'est <em>crucial</em> pour la bureautique.
+            </div>
+
+            <h3>L'Explorateur de Fichiers</h3>
+            <p>Le raccourci à retenir absolument : <kbd>Windows</kbd> + <kbd>E</kbd></p>
+
+            <ul>
+                <li><strong>Volet gauche :</strong> lecteurs (C:, D:, clé USB), dossiers principaux (Bureau, Documents, Téléchargements)</li>
+                <li><strong>Volet central :</strong> le contenu du dossier sélectionné</li>
+                <li><strong>Barre d'adresse :</strong> le fil d'Ariane (où suis-je ?)</li>
+            </ul>
+
+            <div class="box box-info">
+                <span class="box-title">🛠️ Exercice guidé</span>
+                Créez ensemble un dossier <strong>« Formation_Bureautique »</strong> sur le Bureau, puis un sous-dossier <strong>« Vendredi »</strong>.
+            </div>
+
+            <h3>Les Opérations de Base</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Méthode</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Créer un dossier</td>
+                        <td>Clic droit → Nouveau → Dossier</td>
+                    </tr>
+                    <tr>
+                        <td>Renommer</td>
+                        <td>Clic droit → Renommer (ou <kbd>F2</kbd>)</td>
+                    </tr>
+                    <tr>
+                        <td>Sélectionner plusieurs</td>
+                        <td><kbd>Ctrl</kbd> + clic</td>
+                    </tr>
+                    <tr>
+                        <td>Tout sélectionner</td>
+                        <td><kbd>Ctrl</kbd> + <kbd>A</kbd></td>
+                    </tr>
+                    <tr>
+                        <td>Copier / Coller (dupliquer)</td>
+                        <td><kbd>Ctrl</kbd> + <kbd>C</kbd> / <kbd>Ctrl</kbd> + <kbd>V</kbd></td>
+                    </tr>
+                    <tr>
+                        <td>Couper / Coller (déplacer)</td>
+                        <td><kbd>Ctrl</kbd> + <kbd>X</kbd> / <kbd>Ctrl</kbd> + <kbd>V</kbd></td>
+                    </tr>
+                    <tr>
+                        <td>Supprimer (corbeille)</td>
+                        <td><kbd>Suppr</kbd></td>
+                    </tr>
+                    <tr>
+                        <td>Supprimer définitivement</td>
+                        <td><kbd>Maj</kbd> + <kbd>Suppr</kbd></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="box box-warning">
+                <span class="box-title">⚠️ Attention</span>
+                <strong>Copier</strong> = dupliquer. <strong>Couper</strong> = déplacer. Ne pas confondre !
+            </div>
+        </section>
+
+        <!-- ===== PARTIE 4 ===== -->
+        <section id="partie4">
+            <h2>4️⃣ Bonnes Pratiques et Sécurité</h2>
+
+            <h3>Les 5 Raccourcis Indispensables</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Raccourci</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><kbd>Ctrl</kbd> + <kbd>C</kbd> / <kbd>V</kbd></td>
+                        <td>Copier / Coller</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><kbd>Ctrl</kbd> + <kbd>Z</kbd></td>
+                        <td><strong>Annuler</strong> (le meilleur ami du débutant !)</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><kbd>Ctrl</kbd> + <kbd>S</kbd></td>
+                        <td><strong>Sauvegarder</strong> (réflexe toutes les 5 min)</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><kbd>Alt</kbd> + <kbd>Tab</kbd></td>
+                        <td>Changer de fenêtre</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><kbd>Windows</kbd> + <kbd>D</kbd></td>
+                        <td>Afficher le bureau</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>La Règle d'Or de la Sauvegarde</h3>
+
+            <div class="box box-analogy">
+                <span class="box-title">💰 Analogie</span>
+                <kbd>Ctrl</kbd> + <kbd>S</kbd> est votre meilleur ami. C'est comme mettre son argent au coffre : tant que ce n'est pas sauvegardé, ce n'est pas en sécurité.
+            </div>
+
+            <div class="box box-info">
+                <span class="box-title">📦 Règle 3-2-1 simplifiée</span>
+                <strong>3 copies</strong> du fichier, sur <strong>2 supports</strong> différents, dont <strong>1 hors site</strong> (cloud/OneDrive).
+            </div>
+        </section>
+
+        <!-- ===== PARTIE 5 ===== -->
+        <section id="partie5">
+            <h2>5️⃣ Atelier Pratique</h2>
+
+            <div class="exercise">
+                <h3>🎯 Mission : « Le Dossier Parfait »</h3>
+                <ol>
+                    <li>Créez sur le <strong>Bureau</strong> un dossier nommé <strong>« Mon_Travail »</strong>.</li>
+                    <li>Ouvrez ce dossier.</li>
+                    <li>Créez à l'intérieur un sous-dossier <strong>« Documents »</strong> et un sous-dossier <strong>« Images »</strong>.</li>
+                    <li>Ouvrez <strong>Word</strong>, tapez « Bonjour, je m'appelle [Prénom] ».</li>
+                    <li>Sauvegardez le fichier sous le nom <strong>« Presentation.docx »</strong> dans le dossier <strong>« Documents »</strong>.</li>
+                    <li>Fermez Word.</li>
+                    <li>Ouvrez l'Explorateur (<kbd>Windows</kbd> + <kbd>E</kbd>) et vérifiez que le fichier est bien là.</li>
+                    <li>Renommez le fichier en <strong>« Ma_Presentation.docx »</strong>.</li>
+                    <li>Faites une copie de ce fichier et collez-la dans le dossier <strong>« Images »</strong>.</li>
+                    <li>Supprimez le fichier du dossier « Images » et videz la corbeille.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ===== CONSEILS FORMATEUR ===== -->
+        <section id="conseils">
+            <h2>★ Conseils du Formateur</h2>
+
+            <ol>
+                <li><strong>Le rythme :</strong> allez lentement. Ce qui vous semble évident ne l'est pas pour eux. Faites-leur faire, ne le faites pas devant eux.</li>
+                <li><strong>Le vocabulaire :</strong> utilisez les termes techniques (curseur, bureau, dossier, extension) mais expliquez-les. Évitez le jargon trop complexe.</li>
+                <li><strong>L'erreur :</strong> déculpabilisez. « Si vous vous trompez, <kbd>Ctrl</kbd> + <kbd>Z</kbd> est votre ami ».</li>
+                <li><strong>L'analogie :</strong> utilisez des analogies physiques (armoire, cuisine, bureau).</li>
+                <li><strong>La vérification :</strong> à la fin de chaque partie, posez une question de contrôle.</li>
+            </ol>
+
+            <div class="box box-tip">
+                <span class="box-title">🎓 Fin du cours</span>
+                Demandez aux apprenants ce qu'ils ont trouvé le plus difficile. Cela vous donnera le sujet du prochain cours particulier.
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>📚 Cours de bureautique — <strong>Fondamentaux de l'Ordinateur</strong></p>
+        <p>Formation dispensée avec passion 🎓</p>
+    </footer>
+
+    <!-- Bouton retour en haut -->
+    <button class="back-to-top" id="backToTop" aria-label="Retour en haut">↑</button>
+
+    <script>
+        // Barre de progression
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+
+            // Bouton retour en haut
+            const backToTop = document.getElementById('backToTop');
+            if (scrollTop > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // Bouton retour en haut
+        document.getElementById('backToTop').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth scroll pour les liens du sommaire
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

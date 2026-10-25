@@ -1,21 +1,19 @@
 <?php
-
 $host = 'localhost';
-$dbname = 'quiz_local';
-$username = 'quiz_user';
-$password = 'quiz123';
+$dbname = 'quiz-local';
+$username = 'root';
+$password = '';
 
 try {
     $pdo = new PDO(
         "mysql:host=$host;dbname=$dbname;charset=utf8mb4",
         $username,
-        $password
+        $password,
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        ]
     );
-
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    echo "Connexion à MariaDB réussie !";
-
 } catch (PDOException $e) {
-    die("Erreur de connexion : " . $e->getMessage());
+    die('Erreur de connexion à la base de données.');
 }
